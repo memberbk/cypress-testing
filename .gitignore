@@ -1,0 +1,11 @@
+# ไฟล์และโฟลเดอร์ที่ไม่ต้องการให้ติดตาม
+node_modules/
+dist/
+.env
+.DS_Store
+*.log
+*.tmp
+
+# ไฟล์ที่เป็น output จากการ build
+build/
+out/
