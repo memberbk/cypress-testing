@@ -8,7 +8,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: cypress-io/github-action@v6
         with:
-          config-file: cypress.json # หรือ cypress.config.js, ขึ้นอยู่กับการตั้งค่าของคุณ
+          config-file: cypress.config.js # หรือ cypress.config.js, ขึ้นอยู่กับการตั้งค่าของคุณ
       - run: ls -la cypress/videos # เพิ่มขั้นตอนนี้เพื่อดูว่ามีการสร้างวิดีโอหรือไม่
       - uses: actions/upload-artifact@v4
         if: always()
