@@ -7,17 +7,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: cypress-io/github-action@v6
-      # after the test run completes store videos and any screenshots
-      - uses: actions/upload-artifact@v4
-        # add the line below to store screenshots only on failures
-        # if: failure()
         with:
-          name: cypress-screenshots
-          path: cypress/screenshots
-          if-no-files-found: ignore # 'warn' or 'error' are also available, defaults to `warn`
+          config-file: cypress.json # หรือ cypress.config.js, ขึ้นอยู่กับการตั้งค่าของคุณ
+      - run: ls -la cypress/videos # เพิ่มขั้นตอนนี้เพื่อดูว่ามีการสร้างวิดีโอหรือไม่
       - uses: actions/upload-artifact@v4
-        if: failure()
+        if: always()
         with:
           name: cypress-videos
           path: cypress/videos
-          # if-no-files-found: ignore # 'warn' or 'error' are also available, defaults to `warn`
+          if-no-files-found: ignore
+      - uses: cypress-io/github-action@v6
+        with:
+          record: true
+          parallel: true
+          group: 'CI'
+          command: cypress run --browser chrome --record --key ${{ secrets.CYPRESS_RECORD_KEY }} --env video=true
+
