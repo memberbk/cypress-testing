@@ -3,21 +3,22 @@ on: push
 jobs:
   cypress-run:
     runs-on: ubuntu-22.04
-    name: Artifacts
+    name: Cypress Tests
     steps:
       - uses: actions/checkout@v4
       - uses: cypress-io/github-action@v6
-      # after the test run completes store videos and any screenshots
+        with:
+          record: true
+          parallel: true
+          group: 'GitHub Actions'
       - uses: actions/upload-artifact@v4
-        # add the line below to store screenshots only on failures
-        if: failure()
+        if: failure() # only upload screenshots on failure
         with:
           name: cypress-screenshots
           path: cypress/screenshots
-          if-no-files-found: ignore # 'warn' or 'error' are also available, defaults to `warn`
+          if-no-files-found: ignore
       - uses: actions/upload-artifact@v4
-        if: always()
         with:
           name: cypress-videos
           path: cypress/videos
-          # if-no-files-found: ignore # 'warn' or 'error' are also available, defaults to `warn`
+          if-no-files-found: ignore
